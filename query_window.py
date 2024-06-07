@@ -7,15 +7,15 @@ from PyQt5.uic import loadUi
 class QueryWindow(QMainWindow):
     def __init__(self, parent=None):
         super(QueryWindow, self).__init__(parent)
-        loadUi('query_window.ui', self)
+        loadUi('sign_in.ui', self)
 
-        self.setWindowTitle("Query Window")
+        self.setWindowTitle("Sign In Window")
 
         # Заполнение QTypeBox
-        self.QTypeBox.addItem("Find")
-        self.QTypeBox.addItem("Filter")
-        self.QTypeBox.addItem("Join")
-
+        #self.QTypeBox.addItem("Find")
+        #self.QTypeBox.addItem("Filter")
+        #self.QTypeBox.addItem("Join")
+#
         # Заполнение QTableBox
         self.QTableBox.addItem("artist")
         self.QTableBox.addItem("artwork")

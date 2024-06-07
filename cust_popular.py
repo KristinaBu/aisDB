@@ -3,52 +3,29 @@ from PyQt5.QtWidgets import QDialog, QVBoxLayout, QPushButton, QComboBox, QLineE
     QMainWindow, QTableWidgetItem, QHeaderView
 from PyQt5.uic import loadUi
 
-from consts import global_customer_id
 
-
-class CustArtworks(QMainWindow):
+class CustPopular(QMainWindow):
     def __init__(self, sign_in_window):  # добавьте sign_in_window в качестве аргумента
         super().__init__()
         self.controller = None
 
         self.customer_id = None
-        loadUi("windows/customer_menu_data.ui", self)
+        loadUi("windows/customer_menu_popular.ui", self)
         self.controller = None
 
-        self.setWindowTitle('Все товары')
+        self.setWindowTitle('Мои товары')
 
         sign_in_window.userSignedIn.connect(self.setCustomerId)  # Подключаем сигнал к слоту
 
-        print(self.customer_id)
-        # Заполнение QTypeBox
-        self.alphabet.addItem("По возрастанию")
-        self.alphabet.addItem("По убыванию")
-        # Установка начального состояния для QTypeBox и QTableBox
-        self.alphabet.setCurrentIndex(0)
-
-        # Заполнение QTypeBox
-        self.price.addItem("По возрастанию")
-        self.price.addItem("По убыванию")
-        # Установка начального состояния для QTypeBox и QTableBox
-        self.price.setCurrentIndex(0)
-
-        #
-        # Заполнение QTableBox
-        self.loadGenres()
-        # Установка начального состояния для QTypeBox и QTableBox
-        self.genre.setCurrentIndex(0)
-
-        self.all.clicked.connect(self.print_all)
-        self.alf_find.clicked.connect(self.print_alf_find)
-        self.price_find.clicked.connect(self.print_price_find)
-        self.genre_find.clicked.connect(self.print_genre_find)
-        self.how_many.clicked.connect(self.print_how_many)
+        self.art_sale.clicked.connect(self.print_top_art_sale)
+        self.art_raiting.clicked.connect(self.print_top_rated_artworks)
+        self.art.clicked.connect(self.print_top_artists)
+        self.top_gen.clicked.connect(self.print_top_genres)
 
         self.artworks.cellClicked.connect(self.onCellClicked)
         self.sum.clicked.connect(self.sum_calculate)
 
         self.buy.clicked.connect(self.buy_artwork)
-        self.paste.clicked.connect(self.create_review)
         self.back.clicked.connect(self.go_exit)
 
     def go_exit(self):
@@ -61,33 +38,20 @@ class CustArtworks(QMainWindow):
     def setCustomerId(self, customer_id):
         self.customer_id = customer_id
 
-    def loadGenres(self):
-        query = QSqlQuery()
-        sqlstr = "SELECT genre_name FROM genre"
-        if not query.exec_(sqlstr):
-            QMessageBox.critical(self, "Error", query.lastError().text())
-            return
-
-        while query.next():
-            genre_name = query.value(0)
-            self.genre.addItem(genre_name)
-
     def onCellClicked(self, row, column):
         item = self.artworks.item(row, 0)  # получите элемент в первом столбце (название произведения искусства)
         if item is not None:
             artwork_title = item.text()
             self.name.setText(artwork_title)  # установите текст в поле name окна покупки
-            self.theme.setText(artwork_title)
 
-    def print_all(self):
-        print(global_customer_id)
+    def print_top_art_sale(self):
         # Очистить содержимое компонента
         self.artworks.setRowCount(0)
 
         # Установить количество столбцов
-        self.artworks.setColumnCount(4)
+        self.artworks.setColumnCount(3)
 
-        self.artworks.setHorizontalHeaderLabels(['Title', 'Artist Name', 'Price', 'Quantity'])
+        self.artworks.setHorizontalHeaderLabels(['Artwork Title', 'Total Sold', 'Total Customers'])
 
         # Растянуть столбцы, чтобы они занимали всю доступную ширину
         self.artworks.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
@@ -96,13 +60,104 @@ class CustArtworks(QMainWindow):
         query = QSqlQuery()
 
         # Создать строку запроса на выборку данных
-        sqlstr = """
-        SELECT artwork.title, artist.artist_name, artwork.price_main, artwork.quantity
-        FROM artwork
-        INNER JOIN artist ON artwork.artist_id = artist.id
+        sqlstr = f"""
+        SELECT artwork.title, SUM(operation.quantity), COUNT(DISTINCT sale.customer_id)
+        FROM sale
+        INNER JOIN operation ON sale.operation_id = operation.id
+        INNER JOIN artwork ON operation.artwork_id = artwork.id
+        GROUP BY artwork.title
+        ORDER BY SUM(operation.quantity) DESC
+        LIMIT 10
         """
 
-        # Выполнить запрос и проверить его успешность
+        # Выполняем запрос и проверяем его успешность
+        if not query.exec_(sqlstr):
+            QMessageBox.critical(self, "Error", query.lastError().text())
+            return
+
+        # Прочитать в цикле все строки результата
+        # и вывести их в компонент таблицы
+        while query.next():
+            row = self.artworks.rowCount()
+            self.artworks.insertRow(row)
+            self.artworks.setItem(row, 0, QTableWidgetItem(query.value(0)))
+            self.artworks.setItem(row, 1, QTableWidgetItem(str(query.value(1))))
+            self.artworks.setItem(row, 2, QTableWidgetItem(str(query.value(2))))
+
+    def print_top_artists(self):
+        # Очистить содержимое компонента
+        self.artworks.setRowCount(0)
+
+        # Установить количество столбцов
+        self.artworks.setColumnCount(5)
+
+        self.artworks.setHorizontalHeaderLabels(
+            ['Artist Name', 'Birth Date', 'Death Date', 'Artwork Title', 'Total Sold'])
+
+        # Растянуть столбцы, чтобы они занимали всю доступную ширину
+        self.artworks.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+
+        # Создать объект запроса
+        query = QSqlQuery()
+
+        # Создать строку запроса на выборку данных
+        sqlstr = f"""
+        SELECT artist.artist_name, artist.birth_date, artist.death_date, artwork.title, SUM(operation.quantity) as total_sold
+        FROM sale
+        INNER JOIN operation ON sale.operation_id = operation.id
+        INNER JOIN artwork ON operation.artwork_id = artwork.id
+        INNER JOIN artist ON artwork.artist_id = artist.id
+        GROUP BY artist.artist_name, artist.birth_date, artist.death_date, artwork.title
+        ORDER BY total_sold DESC
+        LIMIT 10
+        """
+
+        # Выполняем запрос и проверяем его успешность
+        if not query.exec_(sqlstr):
+            QMessageBox.critical(self, "Error", query.lastError().text())
+            return
+
+        # Прочитать в цикле все строки результата
+        # и вывести их в компонент таблицы
+        while query.next():
+            row = self.artworks.rowCount()
+            self.artworks.insertRow(row)
+            self.artworks.setItem(row, 0, QTableWidgetItem(query.value(0)))
+            self.artworks.setItem(row, 1, QTableWidgetItem(query.value(1).toString("yyyy-MM-dd")))
+            self.artworks.setItem(row, 2,
+                                  QTableWidgetItem(query.value(2).toString("yyyy-MM-dd") if query.value(2) else ''))
+            self.artworks.setItem(row, 3, QTableWidgetItem(query.value(3)))
+            self.artworks.setItem(row, 4, QTableWidgetItem(str(query.value(4))))
+
+
+
+    def print_top_rated_artworks(self):
+        # Очистить содержимое компонента
+        self.artworks.setRowCount(0)
+
+        # Установить количество столбцов
+        self.artworks.setColumnCount(3)
+
+        self.artworks.setHorizontalHeaderLabels(['Artwork Title', 'Artist Name', 'Average Rating'])
+
+        # Растянуть столбцы, чтобы они занимали всю доступную ширину
+        self.artworks.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+
+        # Создать объект запроса
+        query = QSqlQuery()
+
+        # Создать строку запроса на выборку данных
+        sqlstr = f"""
+        SELECT artwork.title, artist.artist_name, AVG(reviews.rating) as average_rating
+        FROM reviews
+        INNER JOIN artwork ON reviews.artwork_id = artwork.id
+        INNER JOIN artist ON artwork.artist_id = artist.id
+        GROUP BY artwork.title, artist.artist_name
+        ORDER BY average_rating DESC
+        LIMIT 10
+        """
+
+        # Выполняем запрос и проверяем его успешность
         if not query.exec_(sqlstr):
             QMessageBox.critical(self, "Error", query.lastError().text())
             return
@@ -115,16 +170,15 @@ class CustArtworks(QMainWindow):
             self.artworks.setItem(row, 0, QTableWidgetItem(query.value(0)))
             self.artworks.setItem(row, 1, QTableWidgetItem(query.value(1)))
             self.artworks.setItem(row, 2, QTableWidgetItem(str(query.value(2))))
-            self.artworks.setItem(row, 3, QTableWidgetItem(str(query.value(3))))
 
-    def print_alf_find(self):
+    def print_top_genres(self):
         # Очистить содержимое компонента
         self.artworks.setRowCount(0)
 
         # Установить количество столбцов
-        self.artworks.setColumnCount(4)
+        self.artworks.setColumnCount(2)
 
-        self.artworks.setHorizontalHeaderLabels(['Title', 'Artist Name', 'Price', 'Quantity'])
+        self.artworks.setHorizontalHeaderLabels(['Genre Name', 'Total Sold'])
 
         # Растянуть столбцы, чтобы они занимали всю доступную ширину
         self.artworks.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
@@ -132,102 +186,20 @@ class CustArtworks(QMainWindow):
         # Создать объект запроса
         query = QSqlQuery()
 
-        # Определить порядок сортировки в зависимости от выбранного в QComboBox варианта
-        order = "ASC" if self.alphabet.currentText() == "По возрастанию" else "DESC"
-
         # Создать строку запроса на выборку данных
         sqlstr = f"""
-        SELECT artwork.title, artist.artist_name, artwork.price_main, artwork.quantity
-        FROM artwork
-        INNER JOIN artist ON artwork.artist_id = artist.id
-        ORDER BY artwork.title {order}
-        """
-
-        # Выполнить запрос и проверить его успешность
-        if not query.exec_(sqlstr):
-            QMessageBox.critical(self, "Error", query.lastError().text())
-            return
-
-        # Прочитать в цикле все строки результата
-        # и вывести их в компонент таблицы
-        while query.next():
-            row = self.artworks.rowCount()
-            self.artworks.insertRow(row)
-            self.artworks.setItem(row, 0, QTableWidgetItem(query.value(0)))
-            self.artworks.setItem(row, 1, QTableWidgetItem(query.value(1)))
-            self.artworks.setItem(row, 2, QTableWidgetItem(str(query.value(2))))
-            self.artworks.setItem(row, 3, QTableWidgetItem(str(query.value(3))))
-
-    def print_price_find(self):
-        # Очистить содержимое компонента
-        self.artworks.setRowCount(0)
-
-        # Установить количество столбцов
-        self.artworks.setColumnCount(4)
-
-        self.artworks.setHorizontalHeaderLabels(['Title', 'Artist Name', 'Price', 'Quantity'])
-
-        # Растянуть столбцы, чтобы они занимали всю доступную ширину
-        self.artworks.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-
-        # Определить порядок сортировки в зависимости от выбранного в QComboBox варианта
-        order = "ASC" if self.price.currentText() == "По возрастанию" else "DESC"
-
-        # Создать объект запроса
-        query = QSqlQuery()
-
-        # Создать строку запроса на выборку данных
-        sqlstr = f"""
-        SELECT artwork.title, artist.artist_name, artwork.price_main, artwork.quantity
-        FROM artwork
-        INNER JOIN artist ON artwork.artist_id = artist.id
-        ORDER BY artwork.price_main {order}
-        """
-
-        # Выполнить запрос и проверить его успешность
-        if not query.exec_(sqlstr):
-            QMessageBox.critical(self, "Error", query.lastError().text())
-            return
-
-        # Прочитать в цикле все строки результата
-        # и вывести их в компонент таблицы
-        while query.next():
-            row = self.artworks.rowCount()
-            self.artworks.insertRow(row)
-            self.artworks.setItem(row, 0, QTableWidgetItem(query.value(0)))
-            self.artworks.setItem(row, 1, QTableWidgetItem(query.value(1)))
-            self.artworks.setItem(row, 2, QTableWidgetItem(str(query.value(2))))
-            self.artworks.setItem(row, 3, QTableWidgetItem(str(query.value(3))))
-
-    def print_genre_find(self):
-        # Очистить содержимое компонента
-        self.artworks.setRowCount(0)
-
-        # Установить количество столбцов
-        self.artworks.setColumnCount(4)
-
-        self.artworks.setHorizontalHeaderLabels(['Title', 'Artist Name', 'Price', 'Quantity'])
-
-        # Растянуть столбцы, чтобы они занимали всю доступную ширину
-        self.artworks.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-
-        # Получить выбранный жанр
-        selected_genre = self.genre.currentText()
-
-        # Создать объект запроса
-        query = QSqlQuery()
-
-        # Создать строку запроса на выборку данных
-        sqlstr = f"""
-        SELECT artwork.title, artist.artist_name, artwork.price_main, artwork.quantity
-        FROM artwork
-        INNER JOIN artist ON artwork.artist_id = artist.id
+        SELECT genre.genre_name, SUM(operation.quantity) as total_sold
+        FROM sale
+        INNER JOIN operation ON sale.operation_id = operation.id
+        INNER JOIN artwork ON operation.artwork_id = artwork.id
         INNER JOIN artwork_genre ON artwork.id = artwork_genre.artwork_id
         INNER JOIN genre ON artwork_genre.genre_id = genre.id
-        WHERE genre.genre_name = '{selected_genre}'
+        GROUP BY genre.genre_name
+        ORDER BY total_sold DESC
+        LIMIT 10
         """
 
-        # Выполнить запрос и проверить его успешность
+        # Выполняем запрос и проверяем его успешность
         if not query.exec_(sqlstr):
             QMessageBox.critical(self, "Error", query.lastError().text())
             return
@@ -238,9 +210,7 @@ class CustArtworks(QMainWindow):
             row = self.artworks.rowCount()
             self.artworks.insertRow(row)
             self.artworks.setItem(row, 0, QTableWidgetItem(query.value(0)))
-            self.artworks.setItem(row, 1, QTableWidgetItem(query.value(1)))
-            self.artworks.setItem(row, 2, QTableWidgetItem(str(query.value(2))))
-            self.artworks.setItem(row, 3, QTableWidgetItem(str(query.value(3))))
+            self.artworks.setItem(row, 1, QTableWidgetItem(str(query.value(1))))
 
     def print_how_many(self):
         # Получить название произведения из QLineEdit
@@ -376,45 +346,3 @@ class CustArtworks(QMainWindow):
 
         else:
             QMessageBox.information(self, "Info", "Произведение искусства не найдено")
-
-    def create_review(self):
-        # Получаем значения из полей
-        rating = self.raiting.value()
-        review_text = self.textEdit.toPlainText()
-        artwork_title = self.theme.text()
-
-        # Создаем объект запроса
-        query = QSqlQuery()
-
-        # Создаем строку запроса на выборку id произведения искусства
-        sqlstr = f"SELECT id FROM artwork WHERE title = '{artwork_title}'"
-
-        try:
-            # Выполняем запрос и проверяем его успешность
-            if not query.exec_(sqlstr):
-                raise Exception(query.lastError().text())
-
-            # Если запрос вернул результат
-            if query.next():
-                artwork_id = query.value(0)
-
-                # Если пользователь еще не оставлял отзыв, создаем новую запись в таблице reviews
-                sqlstr = f"""
-                INSERT INTO reviews (customer_id, artwork_id, rating, review_text)
-                VALUES ({self.customer_id}, {artwork_id}, {rating}, '{review_text}')
-                """
-
-                # Выполняем запрос и проверяем его успешность
-                if not query.exec_(sqlstr):
-                    raise Exception(query.lastError().text())
-
-                QMessageBox.information(self, "Info", "Отзыв успешно создан")
-            else:
-                QMessageBox.information(self, "Info", "Произведение искусства не найдено")
-
-        except Exception as e:
-            error_message = str(e)
-            if 'duplicate key value violates unique constraint' in error_message:
-                QMessageBox.critical(self, "Error", "Вы уже оставили отзыв на это произведение искусства")
-            else:
-                QMessageBox.critical(self, "Error", error_message)

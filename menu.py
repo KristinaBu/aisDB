@@ -59,8 +59,8 @@ class MainWindow(QMainWindow):
 
         role_type = self.sign_in_window.role_type.currentText()
 
-        email = "ivanov@example.com"
-        password = "password1"
+        #email = "ivanov@example.com"
+        #password = "password1"
 
         # Проверить, адмит или юзер
         if role_type == "покупатель":
@@ -92,7 +92,7 @@ class MainWindow(QMainWindow):
                 print("Ошибка выполнения запроса:", query.lastError().text())
 
         else:
-            if password == consts.ADMIN_PASSWORD:
+            if password == consts.ADMIN_PASSWORD and email == consts.ADMIN_EMAIL:
                 self.controller.show_admin_menu()
 
         pass

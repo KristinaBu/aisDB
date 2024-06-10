@@ -87,7 +87,7 @@ class CustArtworks(QMainWindow):
         # Установить количество столбцов
         self.artworks.setColumnCount(4)
 
-        self.artworks.setHorizontalHeaderLabels(['Title', 'Artist Name', 'Price', 'Quantity'])
+        self.artworks.setHorizontalHeaderLabels(['Названиие', 'Художник', 'Цена', 'На складе'])
 
         # Растянуть столбцы, чтобы они занимали всю доступную ширину
         self.artworks.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
@@ -124,7 +124,7 @@ class CustArtworks(QMainWindow):
         # Установить количество столбцов
         self.artworks.setColumnCount(4)
 
-        self.artworks.setHorizontalHeaderLabels(['Title', 'Artist Name', 'Price', 'Quantity'])
+        self.artworks.setHorizontalHeaderLabels(['Названиие', 'Художник', 'Цена', 'На складе'])
 
         # Растянуть столбцы, чтобы они занимали всю доступную ширину
         self.artworks.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
@@ -165,7 +165,7 @@ class CustArtworks(QMainWindow):
         # Установить количество столбцов
         self.artworks.setColumnCount(4)
 
-        self.artworks.setHorizontalHeaderLabels(['Title', 'Artist Name', 'Price', 'Quantity'])
+        self.artworks.setHorizontalHeaderLabels(['Названиие', 'Художник', 'Цена', 'На складе'])
 
         # Растянуть столбцы, чтобы они занимали всю доступную ширину
         self.artworks.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
@@ -206,7 +206,7 @@ class CustArtworks(QMainWindow):
         # Установить количество столбцов
         self.artworks.setColumnCount(4)
 
-        self.artworks.setHorizontalHeaderLabels(['Title', 'Artist Name', 'Price', 'Quantity'])
+        self.artworks.setHorizontalHeaderLabels(['Названиие', 'Художник', 'Цена', 'На складе'])
 
         # Растянуть столбцы, чтобы они занимали всю доступную ширину
         self.artworks.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)

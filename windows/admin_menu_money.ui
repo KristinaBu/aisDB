@@ -599,7 +599,7 @@
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Бухгалтерия&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QTableWidget" name="artworks">
+   <widget class="QTableWidget" name="operationsTable">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -634,12 +634,9 @@
      <item row="0" column="0">
       <widget class="QPushButton" name="print_all">
        <property name="text">
-        <string>Вывести</string>
+        <string>Вывести все операции</string>
        </property>
       </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QComboBox" name="QTypeBox_2"/>
      </item>
     </layout>
    </widget>
@@ -721,7 +718,7 @@
       </widget>
      </item>
      <item row="2" column="0">
-      <widget class="QTableWidget" name="artworks_2"/>
+      <widget class="QTableWidget" name="salesTable"/>
      </item>
      <item row="1" column="0">
       <layout class="QGridLayout" name="gridLayout_6">
@@ -743,9 +740,6 @@
           <string>Вывести</string>
          </property>
         </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QComboBox" name="s_filt"/>
        </item>
       </layout>
      </item>
@@ -777,7 +771,7 @@
       <number>6</number>
      </property>
      <item row="3" column="0">
-      <widget class="QTableWidget" name="artworks_5"/>
+      <widget class="QTableWidget" name="purchasesTable"/>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label_9">
@@ -852,9 +846,6 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
-        <widget class="QComboBox" name="p_filt"/>
-       </item>
       </layout>
      </item>
     </layout>
@@ -872,7 +863,7 @@
      <string>Итого</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="totalSaleLineEdit">
     <property name="geometry">
      <rect>
       <x>230</x>
@@ -885,7 +876,7 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="buy_6">
+   <widget class="QPushButton" name="sum_p">
     <property name="geometry">
      <rect>
       <x>620</x>
@@ -898,7 +889,7 @@
      <string>Итого</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="totalPurchaseLineEdit">
     <property name="geometry">
      <rect>
       <x>810</x>

@@ -15,7 +15,7 @@ class CustProf(QMainWindow):
         loadUi("windows/customer_menu_lk.ui", self)
         self.controller = None
 
-        self.setWindowTitle('Все товары')
+        self.setWindowTitle('Профиль')
 
         sign_in_window.userSignedIn.connect(self.setCustomerId)  # Подключаем сигнал к слоту
         self.info.clicked.connect(self.load_customer_data)

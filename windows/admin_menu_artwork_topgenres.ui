@@ -506,7 +506,7 @@
       <number>6</number>
      </property>
      <item row="2" column="0">
-      <widget class="QPushButton" name="alf_find">
+      <widget class="QPushButton" name="count">
        <property name="text">
         <string>Найти</string>
        </property>
@@ -515,12 +515,12 @@
      <item row="1" column="0">
       <widget class="QLabel" name="label_4">
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Наибольшие продажи&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Наибольшее число&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QPushButton" name="price_find">
+      <widget class="QPushButton" name="rev">
        <property name="text">
         <string>Найти</string>
        </property>
@@ -529,7 +529,7 @@
      <item row="1" column="1">
       <widget class="QLabel" name="label_3">
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Наименьшие продажи&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Больше всего отзывов&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </item>
@@ -651,11 +651,11 @@
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Топ жанров&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QTableWidget" name="artworks">
+   <widget class="QTableWidget" name="genres">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>140</y>
+      <y>170</y>
       <width>1161</width>
       <height>271</height>
      </rect>
@@ -674,7 +674,7 @@
      <string>Выйти</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_9">
+   <widget class="QPushButton" name="back">
     <property name="geometry">
      <rect>
       <x>1000</x>
@@ -685,6 +685,29 @@
     </property>
     <property name="text">
      <string>Назад</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="alf_find_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>140</y>
+      <width>101</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Поиск</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>140</y>
+      <width>311</width>
+      <height>25</height>
+     </rect>
     </property>
    </widget>
   </widget>

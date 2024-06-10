@@ -59,6 +59,7 @@ class AdminInventory(QMainWindow):
         self.artworks.cellClicked.connect(self.onCellClicked)
         self.artworks_del.cellClicked.connect(self.onCellClicked_del)
         self.sum.clicked.connect(self.calculate_supply_cost)
+        self.del_butt.clicked.connect(self.delete_artwork)
 
         self.buy.clicked.connect(self.supply_artwork)
         self.back.clicked.connect(self.go_exit)
@@ -112,7 +113,7 @@ class AdminInventory(QMainWindow):
             if query.next():
                 artwork_id = query.value(0)  # Получите ID товара
                 self.clickArtw.emit(artwork_id)
-                print("id aert = ", artwork_id)
+                print("id 6666aert = ", artwork_id)
                 self.selected_artwork_id = artwork_id
 
     def onCellClicked_del(self, row, column):
@@ -130,7 +131,7 @@ class AdminInventory(QMainWindow):
             if query.next():
                 artwork_id = query.value(0)  # Получите ID товара
                 self.clickArtw.emit(artwork_id)
-                print("id aert = ", artwork_id)
+                print("id 555aert = ", artwork_id)
                 self.selected_artwork_id = artwork_id
 
 
@@ -142,7 +143,7 @@ class AdminInventory(QMainWindow):
         # Установить количество столбцов
         self.artworks.setColumnCount(4)
 
-        self.artworks.setHorizontalHeaderLabels(['Title', 'Artist Name', 'Price', 'Quantity'])
+        self.artworks.setHorizontalHeaderLabels(['Названиие', 'Художник', 'Цена', 'На складе'])
 
         # Растянуть столбцы, чтобы они занимали всю доступную ширину
         self.artworks.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
@@ -179,7 +180,7 @@ class AdminInventory(QMainWindow):
         # Установить количество столбцов
         self.artworks.setColumnCount(4)
 
-        self.artworks.setHorizontalHeaderLabels(['Title', 'Artist Name', 'Price', 'Quantity'])
+        self.artworks.setHorizontalHeaderLabels(['Названиие', 'Художник', 'Цена', 'На складе'])
 
         # Растянуть столбцы, чтобы они занимали всю доступную ширину
         self.artworks.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
@@ -220,7 +221,7 @@ class AdminInventory(QMainWindow):
         # Установить количество столбцов
         self.artworks.setColumnCount(4)
 
-        self.artworks.setHorizontalHeaderLabels(['Title', 'Artist Name', 'Price', 'Quantity'])
+        self.artworks.setHorizontalHeaderLabels(['Названиие', 'Художник', 'Цена', 'На складе'])
 
         # Растянуть столбцы, чтобы они занимали всю доступную ширину
         self.artworks.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
@@ -261,7 +262,7 @@ class AdminInventory(QMainWindow):
         # Установить количество столбцов
         self.artworks.setColumnCount(4)
 
-        self.artworks.setHorizontalHeaderLabels(['Title', 'Artist Name', 'Price', 'Quantity'])
+        self.artworks.setHorizontalHeaderLabels(['Названиие', 'Художник', 'Цена', 'На складе'])
 
         # Растянуть столбцы, чтобы они занимали всю доступную ширину
         self.artworks.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
@@ -304,7 +305,7 @@ class AdminInventory(QMainWindow):
         # Установить количество столбцов
         self.artworks.setColumnCount(4)
 
-        self.artworks.setHorizontalHeaderLabels(['Title', 'Artist Name', 'Price', 'Quantity'])
+        self.artworks.setHorizontalHeaderLabels(['Названиие', 'Художник', 'Цена', 'На складе'])
 
         # Растянуть столбцы, чтобы они занимали всю доступную ширину
         self.artworks.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
@@ -388,7 +389,7 @@ class AdminInventory(QMainWindow):
         # Установить количество столбцов
         self.artworks_del.setColumnCount(4)
 
-        self.artworks_del.setHorizontalHeaderLabels(['Title', 'Artist Name', 'Price', 'Quantity'])
+        self.artworks.setHorizontalHeaderLabels(['Названиие', 'Художник', 'Цена', 'На складе'])
 
         # Растянуть столбцы, чтобы они занимали всю доступную ширину
         self.artworks_del.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)

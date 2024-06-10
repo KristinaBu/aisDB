@@ -105,7 +105,7 @@ class MainWindow(QMainWindow):
         pass
 
     def initUI(self):
-        self.setWindowTitle('MainWindow')
+        self.setWindowTitle('Главное меню')
 
     def dbconnect(self):
         # Создание соединения с БД

@@ -6,6 +6,12 @@ from PyQt5.QtWidgets import QApplication
 from adm_artist import AdmArtist
 from adm_artw import AdmArtwt
 from adm_menu_aerw_inv import AdminInventory
+from adm_menu_artw import AdminMenuArtw
+from adm_menu_artw_topGenres import AdmArtwGenres
+from adm_menu_artw_topSales import AdmTopSales
+from admin_menu_cust_data import AdmCustData
+from admin_menu_money import AdmMoney
+from admin_menu_supl_data import AdmSuplData
 from artw_edit import ArtwEdit
 from artw_look import ArtwLook
 from cust_prof import CustProf
@@ -16,6 +22,7 @@ from cust_menu import CustMenu
 from adm_menu import AdminMenu
 from adm_menu_cust import AdminCustMenu
 from adm_menu_supl import AdminSuplMenu
+from cust_reviews import CustRev
 from menu import MainWindow
 from about import AboutWindow
 from controller import Controller
@@ -29,22 +36,31 @@ if __name__ == '__main__':
     admin_menu = AdminMenu()
     admin_cust_memu = AdminCustMenu()
     admin_supl_menu = AdminSuplMenu()
+    admin_menu_artw = AdminMenuArtw()
 
     admin_menu_inventory = AdminInventory()
     artw_edit = ArtwEdit(admin_menu_inventory)
     artw_look = ArtwLook(admin_menu_inventory)
     adm_artist = AdmArtist()
     adm_artw = AdmArtwt()
+    adm_top_sales = AdmTopSales()
+    sdm_top_genres = AdmArtwGenres()
+    adm_cust_data = AdmCustData()
+    adm_supl_data = AdmSuplData()
+    adm_money = AdmMoney()
 
     cust_menu = CustMenu()
     cust_artworks = CustArtworks(main_window)
     cust_my_artworks = CustMyArtworks(main_window)
     cust_popular = CustPopular(main_window)
     cust_prof = CustProf(main_window)
+    cust_rev = CustRev(main_window)
 
     controller.set_windows(main_window, about_window, admin_menu, admin_cust_memu, admin_supl_menu, cust_menu,
                            cust_artworks, cust_my_artworks, cust_popular, cust_prof, admin_menu_inventory,
-                           artw_edit, artw_look, adm_artist, adm_artw)
+                           artw_edit, artw_look, adm_artist, adm_artw, admin_menu_artw, adm_top_sales, cust_rev,
+                           sdm_top_genres, adm_cust_data, adm_supl_data, adm_money)
+
     main_window.set_controller(controller)
     about_window.set_controller(controller)
     admin_menu.set_controller(controller)
@@ -55,11 +71,18 @@ if __name__ == '__main__':
     cust_my_artworks.set_controller(controller)
     cust_popular.set_controller(controller)
     cust_prof.setCustomerId(controller)
+    cust_rev.set_controller(controller)
     admin_menu_inventory.set_controller(controller)
     artw_edit.set_controller(controller)
     artw_look.set_controller(controller)
     adm_artist.set_controller(controller)
     adm_artw.set_controller(controller)
+    admin_menu_artw.set_controller(controller)
+    adm_top_sales.set_controller(controller)
+    sdm_top_genres.set_controller(controller)
+    adm_cust_data.set_controller(controller)
+    adm_supl_data.set_controller(controller)
+    adm_money.set_controller(controller)
 
     #main_window.show()
     sys.exit(app.exec_())

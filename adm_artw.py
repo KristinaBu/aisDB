@@ -16,7 +16,7 @@ class AdmArtwt(QMainWindow):
         loadUi("windows/adm_artw.ui", self)
         self.controller = None
 
-        self.setWindowTitle('Художники')
+        self.setWindowTitle('Товар')
 
         self.load_genres()
         self.load_artists()

@@ -19,6 +19,7 @@ class CustMenu(QMainWindow):
         self.artworks.clicked.connect(self.controller.show_cust_artworks_window)
         self.my_artworks.clicked.connect(self.controller.show_cust_myartworks_window)
         self.popular.clicked.connect(self.controller.show_cust_popular_window)
+        self.reviews.clicked.connect(self.controller.show_cust_rev)
         self.lk.clicked.connect(self.controller.show_cust_lk_window)
 
 
@@ -26,5 +27,5 @@ class CustMenu(QMainWindow):
         self.close()
 
     def initUI(self):
-        self.setWindowTitle('Администратор - меню')
+        self.setWindowTitle('Покупатель - меню')
 

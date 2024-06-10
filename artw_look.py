@@ -14,7 +14,7 @@ class ArtwLook(QMainWindow):
         loadUi("windows/cust_look.ui", self)
         self.controller = None
 
-        self.setWindowTitle('Все товары')
+        self.setWindowTitle('Товар - просмотр')
 
         artw_window.clickArtw.connect(self.setArtworkID)  # Подключаем сигнал к слоту
         self.look.clicked.connect(self.loadArtworkInfo)
@@ -46,10 +46,12 @@ class ArtwLook(QMainWindow):
         """
 
         if not query.exec_(sqlstr):
+            print("___", query.lastError().text())
             QMessageBox.critical(self, "Error", query.lastError().text())
             return
 
         if query.next():
+            print("id load aert = ", query.value(0) , query.value(1), query.value(2), query.value(3), query.value(4), query.value(5)     )
             artwork_title = query.value(0)  # Получите название произведения искусства
             artist_name = query.value(1)  # Получите имя художника
             price_main = query.value(2)  # Получите основную часть цены

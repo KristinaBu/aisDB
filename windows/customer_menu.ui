@@ -489,7 +489,7 @@
       <x>210</x>
       <y>110</y>
       <width>241</width>
-      <height>231</height>
+      <height>261</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
@@ -505,10 +505,10 @@
      <property name="verticalSpacing">
       <number>6</number>
      </property>
-     <item row="4" column="0">
-      <widget class="QPushButton" name="lk">
+     <item row="6" column="0">
+      <widget class="QPushButton" name="exit">
        <property name="text">
-        <string>Профиль</string>
+        <string>Выйти</string>
        </property>
       </widget>
      </item>
@@ -519,17 +519,10 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QPushButton" name="artworks">
-       <property name="text">
-        <string>Все товары</string>
-       </property>
-      </widget>
-     </item>
      <item row="5" column="0">
-      <widget class="QPushButton" name="exit">
+      <widget class="QPushButton" name="lk">
        <property name="text">
-        <string>Выйти</string>
+        <string>Профиль</string>
        </property>
       </widget>
      </item>
@@ -537,6 +530,20 @@
       <widget class="QPushButton" name="popular">
        <property name="text">
         <string>Популярные товары</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QPushButton" name="artworks">
+       <property name="text">
+        <string>Все товары</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QPushButton" name="reviews">
+       <property name="text">
+        <string>Отзывы</string>
        </property>
       </widget>
      </item>

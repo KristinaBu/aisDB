@@ -487,7 +487,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>80</y>
+      <y>50</y>
       <width>1151</width>
       <height>151</height>
      </rect>
@@ -505,20 +505,24 @@
      <property name="verticalSpacing">
       <number>6</number>
      </property>
-     <item row="2" column="2">
-      <widget class="QComboBox" name="price"/>
+     <item row="1" column="2">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;По цене&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QPushButton" name="alf_find">
+       <property name="text">
+        <string>Найти</string>
+       </property>
+      </widget>
      </item>
      <item row="1" column="0">
       <widget class="QPushButton" name="all">
        <property name="text">
         <string>Все товары</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="2">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;По цене&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </item>
@@ -536,22 +540,8 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
-      <widget class="QPushButton" name="alf_find">
-       <property name="text">
-        <string>Найти</string>
-       </property>
-      </widget>
-     </item>
      <item row="2" column="1">
       <widget class="QComboBox" name="alphabet"/>
-     </item>
-     <item row="1" column="1">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;По алфавиту&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
      </item>
      <item row="1" column="3">
       <widget class="QLabel" name="label_5">
@@ -560,8 +550,18 @@
        </property>
       </widget>
      </item>
+     <item row="1" column="1">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;По алфавиту&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
      <item row="2" column="3">
       <widget class="QComboBox" name="genre"/>
+     </item>
+     <item row="2" column="2">
+      <widget class="QComboBox" name="price"/>
      </item>
     </layout>
    </widget>
@@ -991,6 +991,29 @@
     </property>
     <property name="text">
      <string>Назад</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="name_2">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>220</y>
+      <width>379</width>
+      <height>25</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="sum_2">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>220</y>
+      <width>161</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Поиск</string>
     </property>
    </widget>
   </widget>

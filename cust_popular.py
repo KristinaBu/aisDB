@@ -13,7 +13,7 @@ class CustPopular(QMainWindow):
         loadUi("windows/customer_menu_popular.ui", self)
         self.controller = None
 
-        self.setWindowTitle('Мои товары')
+        self.setWindowTitle('Популярное')
 
         sign_in_window.userSignedIn.connect(self.setCustomerId)  # Подключаем сигнал к слоту
 
@@ -51,7 +51,7 @@ class CustPopular(QMainWindow):
         # Установить количество столбцов
         self.artworks.setColumnCount(3)
 
-        self.artworks.setHorizontalHeaderLabels(['Artwork Title', 'Total Sold', 'Total Customers'])
+        self.artworks.setHorizontalHeaderLabels(['Название', 'Продано', 'Число покупалетей'])
 
         # Растянуть столбцы, чтобы они занимали всю доступную ширину
         self.artworks.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
@@ -92,7 +92,7 @@ class CustPopular(QMainWindow):
         self.artworks.setColumnCount(5)
 
         self.artworks.setHorizontalHeaderLabels(
-            ['Artist Name', 'Birth Date', 'Death Date', 'Artwork Title', 'Total Sold'])
+            ['Имя', 'Дата рождения', 'Дата смерти', 'Картина', 'Продано'])
 
         # Растянуть столбцы, чтобы они занимали всю доступную ширину
         self.artworks.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
@@ -138,7 +138,7 @@ class CustPopular(QMainWindow):
         # Установить количество столбцов
         self.artworks.setColumnCount(3)
 
-        self.artworks.setHorizontalHeaderLabels(['Artwork Title', 'Artist Name', 'Average Rating'])
+        self.artworks.setHorizontalHeaderLabels(['Картина', 'Художник', 'Средний рейтинг'])
 
         # Растянуть столбцы, чтобы они занимали всю доступную ширину
         self.artworks.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
@@ -178,7 +178,7 @@ class CustPopular(QMainWindow):
         # Установить количество столбцов
         self.artworks.setColumnCount(2)
 
-        self.artworks.setHorizontalHeaderLabels(['Genre Name', 'Total Sold'])
+        self.artworks.setHorizontalHeaderLabels(['Жанр', 'Продано'])
 
         # Растянуть столбцы, чтобы они занимали всю доступную ширину
         self.artworks.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)

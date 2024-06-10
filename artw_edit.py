@@ -14,7 +14,7 @@ class ArtwEdit(QMainWindow):
         loadUi("windows/adm_look.ui", self)
         self.controller = None
 
-        self.setWindowTitle('Все товары')
+        self.setWindowTitle('Товар - редактирование')
 
         artw_window.clickArtw.connect(self.setArtworkID)  # Подключаем сигнал к слоту
         self.look.clicked.connect(self.loadArtworkInfo)

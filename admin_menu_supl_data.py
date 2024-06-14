@@ -8,7 +8,7 @@ from PyQt5.uic import loadUi
 class AdmSuplData(QMainWindow):
     clickSupplier = pyqtSignal(int)  # Создаем новый сигнал, который передает целое число (ID пользователя)
 
-    def __init__(self):  # добавьте sign_in_window в качестве аргумента
+    def __init__(self):
         super().__init__()
         self.controller = None
 
